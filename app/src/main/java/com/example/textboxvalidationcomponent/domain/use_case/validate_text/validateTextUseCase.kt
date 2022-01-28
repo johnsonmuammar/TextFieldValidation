@@ -1,41 +1,26 @@
 package com.example.textboxvalidationcomponent.domain.use_case.validate_text
 
 import android.util.Log
+import com.example.textboxvalidationcomponent.domain.model.ValidationItem
 
 class ValidateTextUseCase {
 
-    companion object{
+    companion object {
         val TAG = "validated"
-        fun validateName(name: String):Boolean{
+        fun validateTextError(inputString: String): ValidationItem {
             val re = Regex("[^A-Za-z0-9 ]")
-            if(re.containsMatchIn(name)){
+            if (re.containsMatchIn(inputString)) {
                 Log.d(TAG, "validated found")
-                return true
-            }else{
+                return ValidationItem(true, "something wrong")
+            } else {
                 Log.d(TAG, "validated not found all good")
-                return false
+                return ValidationItem(false, "all good")
             }
         }
 
-        fun validateEmail(name: String):Pair<Boolean, String>{
-            val re = Regex("[^A-Za-z0-9@ ]")
-            if(re.containsMatchIn(name)){
-                Log.d(TAG, "validated found")
-                return Pair(false, name)
-            }else{
-                Log.d(TAG, "validated not found all good")
-                return Pair(true, name)
-            }
-        }
-        fun validatePhone(name: String):Pair<Boolean, String>{
-            val re = Regex("[^0-9]")
-            if(re.containsMatchIn(name)){
-                Log.d(TAG, "validated found")
-                return Pair(false, name)
-            }else{
-                Log.d(TAG, "validated not found all good")
-                return Pair(true, name)
-            }
+        fun validationInfo(inputString: String): ValidationItem {
+            return ValidationItem(true, "keystrokes")
+
         }
     }
 }
