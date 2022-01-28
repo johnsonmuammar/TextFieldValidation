@@ -24,12 +24,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    var errorText by remember {
-                        mutableStateOf("Something went wrong")
-                    }
-                    var errorFlag by remember {
-                        mutableStateOf(false)
-                    }
+
                     Column() {
                         Row(
                             horizontalArrangement = Arrangement.SpaceAround,
@@ -39,8 +34,6 @@ class MainActivity : ComponentActivity() {
                             ValidatedNameField(
                                 field_label = "First Name",
                                  )
-                            ValidatedNameField(field_label = "Last Name",
-                                )
                         }
 
                     }

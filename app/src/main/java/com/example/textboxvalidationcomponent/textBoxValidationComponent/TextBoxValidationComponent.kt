@@ -2,6 +2,7 @@ package com.example.textboxvalidationcomponent.textBoxValidationComponent
 
 import android.util.Log
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -20,10 +21,10 @@ import com.example.textboxvalidationcomponent.domain.use_case.validate_text.Vali
 val TAG = "Validated Text Field"
 @Composable
 fun ValidatedNameField(field_label:String ="",
-                       errorExpressionList:List<Regex> = listOf(Regex("")),
+                       errorExpressionList:List<Regex> = listOf(Regex("[^A-Za-z0-9 ]")),
                        infoExpressionList: List<Regex> = listOf(Regex("")),
                        ){
-    var validateTextUseCase = ValidateTextUseCase()
+    var validateTextUseCase = ValidateTextUseCase(errorExpressionList,infoExpressionList)
     var text by remember {
         mutableStateOf("")
     }
@@ -62,7 +63,8 @@ fun ValidatedNameField(field_label:String ="",
                 onNext = { red(validateTextUseCase.validateTextError(text)) }
             ),
             label = { Text(field_label) },
-            modifier = Modifier.width(160.dp)
+            modifier = Modifier.fillMaxWidth(),
+
         )
         if (infoTextFlag) {
             Text(text = infoText, color = color )
