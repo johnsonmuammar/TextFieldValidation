@@ -3,24 +3,39 @@ package com.example.textboxvalidationcomponent.domain.use_case.validate_text
 import android.util.Log
 import com.example.textboxvalidationcomponent.domain.model.ValidationItem
 
-class ValidateTextUseCase {
+class ValidateTextUseCase( errorExpressionList:List<Regex> = listOf(Regex("[^A-Za-z0-9 ]")),
+                           infoExpressionList: List<Regex> = listOf(Regex("[^ ]")))
+{
+    val errorExpressionList = errorExpressionList
+    val infoExpressionList = infoExpressionList
 
-    companion object {
-        val TAG = "validated"
-        fun validateTextError(inputString: String): ValidationItem {
-            val re = Regex("[^A-Za-z0-9 ]")
+    val TAG = "validated"
+    fun validateTextError(inputString: String): ValidationItem {
+        lateinit var errorValidationItem: ValidationItem
+        for(re in this.errorExpressionList) {
             if (re.containsMatchIn(inputString)) {
                 Log.d(TAG, "validated found")
-                return ValidationItem(true, "something wrong")
+                errorValidationItem= ValidationItem(true, "something wrong")
             } else {
                 Log.d(TAG, "validated not found all good")
-                return ValidationItem(false, "all good")
+                errorValidationItem= ValidationItem(false, "all good")
             }
         }
-
-        fun validationInfo(inputString: String): ValidationItem {
-            return ValidationItem(true, "keystrokes")
-
-        }
+        return errorValidationItem
     }
+
+    fun validationInfo(inputString: String): ValidationItem {
+        lateinit var infoValidationItem: ValidationItem
+        for(re in this.infoExpressionList) {
+            if (re.containsMatchIn(inputString)) {
+                Log.d(TAG, "validated found")
+                infoValidationItem= ValidationItem(true, "keStrokes")
+            } else {
+                Log.d(TAG, "validated not found all good")
+                infoValidationItem= ValidationItem(false, "all good")
+            }
+        }
+        return infoValidationItem
+    }
+
 }

@@ -19,7 +19,11 @@ import com.example.textboxvalidationcomponent.domain.use_case.validate_text.Vali
 
 val TAG = "Validated Text Field"
 @Composable
-fun ValidatedNameField(field_label:String ="", ){
+fun ValidatedNameField(field_label:String ="",
+                       errorExpressionList:List<Regex> = listOf(Regex("")),
+                       infoExpressionList: List<Regex> = listOf(Regex("")),
+                       ){
+    var validateTextUseCase = ValidateTextUseCase()
     var text by remember {
         mutableStateOf("")
     }
@@ -41,14 +45,12 @@ fun ValidatedNameField(field_label:String ="", ){
     fun blue(currentText: String){
         color = Color.DarkGray
         text = currentText
-        val validationInfo =ValidateTextUseCase.validationInfo(currentText)
+        val validationInfo =validateTextUseCase.validationInfo(currentText)
         infoText = validationInfo.errorStatement
         infoTextFlag = validationInfo.errorFlag
 
     }
     Column() {
-
-
         OutlinedTextField(
             value = text,
             onValueChange = { newText ->
@@ -57,8 +59,7 @@ fun ValidatedNameField(field_label:String ="", ){
             singleLine = true,
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
             keyboardActions = KeyboardActions(
-                onNext = { red(ValidateTextUseCase.validateTextError(text)) }
-
+                onNext = { red(validateTextUseCase.validateTextError(text)) }
             ),
             label = { Text(field_label) },
             modifier = Modifier.width(160.dp)
