@@ -10,7 +10,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.textboxvalidationcomponent.textBoxValidationComponent.ValidatedNameField
+import com.example.textboxvalidationcomponent.textBoxValidationComponent.ValidatedTextField
 import com.example.textboxvalidationcomponent.ui.theme.TextBoxValidationComponentTheme
 
 class MainActivity : ComponentActivity() {
@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier.fillMaxWidth()
 
                         ) {
-                            ValidatedNameField(
+                            ValidatedTextField(
                                 field_label = "First Name",
                                  )
                         }
