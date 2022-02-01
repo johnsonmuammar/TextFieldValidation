@@ -17,12 +17,8 @@ import com.example.textboxvalidationcomponent.domain.use_case.validate_text.Vali
 val TAG = "Validated Text Field"
 @Composable
 fun ValidatedTextField(field_label:String ="",
-                       errorValidationList:List<ValidationObject> =
-                           listOf(ValidationObject("UserName Empty", Type.HINT,
-                               Regex("^.+\$")), ValidationObject("UserName Syntax", Type.ERROR,
-                           Regex("^[a-zA-Z0-9@_.,-]*\$")
-                           )
-                           )
+                       errorValidationList:List<ValidationObject>
+
 ){
     var validateTextUseCase = ValidateTextUseCase(errorValidationList)
     var text by remember {
@@ -70,6 +66,8 @@ fun ValidatedTextField(field_label:String ="",
         )
         if (infoTextFlag) {
             Text(text = infoText, color = color )
+        }else{
+            Text(text = "")
         }
     }
 }
